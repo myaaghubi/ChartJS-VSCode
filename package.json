@@ -1,0 +1,99 @@
+{
+  "name": "chartjs-vscode",
+  "displayName": "ChartJS Helper",
+  "description": "ChartJS helper extension for VSCode",
+  "version": "0.0.1",
+  "publisher": "myaaghubi",
+  "license": "GPL-3.0",
+  "icon": "icon.png",
+  "homepage": "https://github.com/myaaghubi/ChartJS-VSCode",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/myaaghubi/ChartJS-VSCode"
+  },
+  "bugs": {
+    "url": "https://github.com/myaaghubi/ChartJS-VSCode/issues"
+  },
+  "engines": {
+    "vscode": "^1.31.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "chart",
+    "chartjs"
+  ],
+  "activationEvents": [],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "ChartJS.import",
+        "title": "ChartJS: Import JS",
+        "group": "ChartJS"
+      },
+      {
+        "command": "ChartJS.newChartBar",
+        "title": "ChartJS: Insert Bar Graph",
+        "group": "ChartJS"
+      },
+      {
+        "command": "ChartJS.newChartBubble",
+        "title": "ChartJS: Insert Bubble Graph",
+        "group": "ChartJS"
+      },
+      {
+        "command": "ChartJS.newChartDoughnut",
+        "title": "ChartJS: Insert Doughnut Graph",
+        "group": "ChartJS"
+      },
+      {
+        "command": "ChartJS.newChartLine",
+        "title": "ChartJS: Insert Line Graph",
+        "group": "ChartJS"
+      },
+      {
+        "command": "ChartJS.newChartPie",
+        "title": "ChartJS: Insert Pie Graph",
+        "group": "ChartJS"
+      },
+      {
+        "command": "ChartJS.newChartPolarArea",
+        "title": "ChartJS: Insert PolarArea Graph",
+        "group": "ChartJS"
+      },
+      {
+        "command": "ChartJS.newChartRadar",
+        "title": "ChartJS: Insert Radar Graph",
+        "group": "ChartJS"
+      },
+      {
+        "command": "ChartJS.newChartScatter",
+        "title": "ChartJS: Insert Scatter Graph",
+        "group": "ChartJS"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.31.0",
+    "@types/glob": "^8.1.0",
+    "@types/mocha": "^10.0.1",
+    "@types/node": "16.x",
+    "@typescript-eslint/eslint-plugin": "^5.53.0",
+    "@typescript-eslint/parser": "^5.53.0",
+    "eslint": "^8.34.0",
+    "glob": "^8.1.0",
+    "mocha": "^10.2.0",
+    "typescript": "^4.9.5",
+    "@vscode/test-electron": "^2.2.3"
+  }
+}
