@@ -42,7 +42,6 @@ export function activate(context: vscode.ExtensionContext) {
 export function deactivate() { }
 
 function registerNewChartCommand(type: ChartTypes) {
-
 	return vscode.commands.registerCommand('ChartJS.newChart' + capitalize(type), () => {
 		const editor = vscode.window.activeTextEditor;
 		if (!editor) {
@@ -50,6 +49,12 @@ function registerNewChartCommand(type: ChartTypes) {
 			return;
 		}
 
+		// insert a line before
+		// editor.edit((edit: vscode.TextEditorEdit) => {
+		// 	const line = editor.document.lineAt(editor.selection.active.line);
+		// 	edit.insert(new vscode.Position(line.lineNumber, 0), '\n');
+		// });
+		
 		const snippet = newChartSnippet(type);
 		editor.insertSnippet(snippet);
 	});
@@ -61,40 +66,46 @@ function capitalize(str: string) {
 
 function newChartSnippet(type: ChartTypes) {
 	let data = "12, 18, 19";
-	if (type==ChartTypes.Bubble || type==ChartTypes.Scatter) {
-		data="[12, 4, 14], [18, 2, 12], [9, 8, 22]";
+	if (type == ChartTypes.Bubble || type == ChartTypes.Scatter) {
+		data = "[12, 4, 14], [18, 2, 12], [9, 8, 22]";
 	}
 
-	return new vscode.SnippetString(`<canvas id="\${1:${type}Chart}" width="" height=""></canvas>
-<script>
-\tvar \${1:${type}Chart} = document.getElementById('\${1:${type}Chart}');
-\tvar chart = new Chart(\${1:${type}Chart}, {
-\t\ttype: '${type}',
-\t\tdata: {
-\t\t\tlabels: [\${2:'Label1', 'Label2', 'Label3'}],
-\t\t\tdatasets: [{
-\t\t\t\tlabel: "\${3:New Dataset}",
-\t\t\t\tdata: [\${4:${data}}],
-\t\t\t\tborderWidth: 1
-\t\t\t}]
+	let prefix = "", suffix = "";
+	if (vscode.window.activeTextEditor?.document.languageId == 'html') {
+		prefix = `<canvas id="\${1:${type}Chart}" width="" height=""></canvas>
+<script>`;
+		suffix = `
+</script>`;
+	}
+
+	return new vscode.SnippetString(prefix + `
+var \${1:${type}Chart} = document.getElementById('\${1:${type}Chart}');
+var chart = new Chart(\${1:${type}Chart}, {
+\ttype: '${type}',
+\tdata: {
+\t\tlabels: [\${2:'Label1', 'Label2', 'Label3'}],
+\t\tdatasets: [{
+\t\t\tlabel: "\${3:New Dataset}",
+\t\t\tdata: [\${4:${data}}],
+\t\t\tborderWidth: 1
+\t\t}]
+\t},
+\toptions: {
+\t\tresponsive: true,
+\t\ttitle: {
+\t\t\ttext: "\${5:New ${capitalize(type)} Chart}",
+\t\t\tdisplay: true,
 \t\t},
-\t\toptions: {
-\t\t\tresponsive: true,
-\t\t\ttitle: {
-\t\t\t\ttext: "\${5:New ${capitalize(type)} Chart}",
-\t\t\t\tdisplay: true,
-\t\t\t},
-\t\t\tscales: {},
-\t\t\tevents: [],
-\t\t\tlegend: {
-\t\t\t\tdisplay: true,
-\t\t\t},
-\t\t\ttooltips: {
-\t\t\t\tmode: ''
-\t\t\t},
-\t\t\tlayout: {},
-\t\t\tanimation: {}
-\t\t}
-\t});
-</script>`);
+\t\tscales: {},
+\t\tevents: [],
+\t\tlegend: {
+\t\t\tdisplay: true,
+\t\t},
+\t\ttooltips: {
+\t\t\tmode: ''
+\t\t},
+\t\tlayout: {},
+\t\tanimation: {}
+\t}
+});`+ suffix);
 }

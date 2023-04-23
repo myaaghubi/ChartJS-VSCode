@@ -2,7 +2,7 @@
   "name": "chartjs-vscode",
   "displayName": "ChartJS Helper",
   "description": "ChartJS helper extension for VSCode",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "publisher": "myaaghubi",
   "license": "GPL-3.0",
   "icon": "icon.png",
